@@ -1,0 +1,9 @@
+# PHPStorm
+.idea/*
+
+#composer and other vendor staff
+vendor/*
+
+#sqlite data file
+*.sqlite
+
