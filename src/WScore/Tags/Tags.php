@@ -42,16 +42,16 @@ namespace WScore\Tags;
 class Tags
 {
     /** @var null                  name of tag, such as span */
-    protected  $tagName    = null;
+    public $tagName    = null;
 
     /** @var array                 array of contents         */
-    protected $contents   = array();
+    public $contents   = array();
 
     /** @var array                 array of attributes       */
     public $_attributes = array();
 
     /** @var bool                  for form element's name   */
-    protected $multiple = false;
+    public $multiple = false;
 
     /** @var array                 normalize tag name  */
     public static $_normalize_tag = array(
