@@ -93,7 +93,7 @@ class TagsTest extends \PHPUnit_Framework_TestCase
         $text = (string)  $this->tags->a( 'a link' )->href( 'do.php' )->style( 'style1' )->style( 'style2' );
         $this->assertContains( '<a href="do.php" style="style1; style2">a link</a>', $text );
 
-        $text = (string)  $this->tags->a( 'a link' )->href( 'do.php' )->style( 'style1' )->style_( 'style2', false );
+        $text = (string)  $this->tags->a( 'a link' )->href( 'do.php' )->style( 'style1' )->style( 'style2', false );
         $this->assertContains( '<a href="do.php" style="style2">a link</a>', $text );
 
     }

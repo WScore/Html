@@ -6,7 +6,6 @@ namespace WScore\Tags;
  * @method a()
  * @method href()
  * @method target()
- * @method style()
  * @method div()
  * @method input()
  * @method value()
@@ -257,7 +256,7 @@ class Tags
      * @param string $connector    set FALSE to reset style.
      * @return Tags
      */
-    public function style_( $style, $connector='; ' ) {
+    public function style( $style, $connector='; ' ) {
         return $this->_setAttribute( 'style', $style, $connector );
     }
 
