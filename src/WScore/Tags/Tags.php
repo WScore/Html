@@ -53,29 +53,6 @@ class Tags
     /** @var bool                  for form element's name   */
     public $multiple = false;
 
-    /** @var array                 normalize tag name  */
-    public static $_normalize_tag = array(
-        'b'       => 'strong',
-        'bold'    => 'strong',
-        'italic'  => 'i',
-        'image'   => 'img',
-        'item'    => 'li',
-        'order'   => 'ol',
-        'number'  => 'nl',
-    );
-    /** @var array                  tags without contents */
-    public static $_tag_no_body = array(
-        'br', 'img', 'input',
-    );
-    /** @var array                  in-line tags   */
-    public static $_tag_span = array(
-        'span', 'p', 'strong', 'i', 'sub', 'li', 'a', 'label',
-    );
-    /** @var array                  how to connect attribute values */
-    public static $_attribute_connectors = array(
-        'class' => ' ',
-        'style' => '; ',
-    );
     /** @var string                 encoding */
     public static $_encoding = 'UTF-8';
 
@@ -138,6 +115,10 @@ class Tags
         return $this;
     }
 
+    /**
+     * @param $name
+     * @return Tags
+     */
     public function __get( $name ) {
         if( is_null( $this->tagName ) ) {
             return $this->_new( $name );
@@ -167,7 +148,7 @@ class Tags
     }
 
     public function _isSpanTag() {
-        return in_array( $this->tagName, static::$_tag_span );
+        return Utils::isSpanTag( $this->tagName );
     }
 
     public function _isNoBodyTag() {
@@ -185,14 +166,8 @@ class Tags
     protected function _setTagName( $tagName )
     {
         if( empty( $tagName ) ) return $this;
-        $tagName = $this->_normalize( $tagName );
-        if( array_key_exists( $tagName, static::$_normalize_tag ) ) {
-            $tagName = static::$_normalize_tag[ $tagName ];
-        }
-        $this->tagName = $tagName;
-        if( in_array( $this->tagName, static::$_tag_no_body ) ) {
-            $this->_noBodyTag = true;
-        }
+        $this->tagName = Utils::normalizeTagName( $tagName );
+        $this->_noBodyTag = Utils::isNoBodyTag( $this->tagName );
         return $this;
     }
 
@@ -233,14 +208,11 @@ class Tags
             $value = '';
         }
         if( $value === false ) return $this;     // ignore the property.
-        $name = $this->_normalize( $name );
+        $name = Utils::normalize( $name );
         if( $value === true  ) $value = $name;   // same as name (checked="checked")
         // set connector if it is not set.
         if( $connector === null ) {
-            $connector = false;                  // default is to replace value.
-            if( array_key_exists( $name, static::$_attribute_connectors ) ) {
-                $connector = static::$_attribute_connectors[ $name ];
-            }
+            $connector = Utils::getConnector( $name ); // default is to replace value.
         }
         // set attribute.
         if( !isset( $this->_attributes[ $name ] ) // new attribute.
@@ -253,18 +225,6 @@ class Tags
         return $this;
     }
 
-    /**
-     * normalize tag and attribute name: lower case, and remove first _ if exists.
-     *
-     * @param string $name
-     * @return string
-     */
-    protected function _normalize( $name ) {
-        $name = strtolower( $name );
-        if( $name[0]=='_') $name = substr( $name, 1 );
-        $name = str_replace( '_', '-', $name );
-        return $name;
-    }
     // +----------------------------------------------------------------------+
     //  methods for setting tags, attributes, and contents.
     // +----------------------------------------------------------------------+
@@ -331,7 +291,7 @@ class Tags
         $html = '';
         if( empty( $this->contents ) ) return $html;
         foreach( $this->contents as $content ) {
-            if( !$this->_isNoBodyTag() && !$this->_isSpanTag() && $html && substr( $html, -1 ) != "\n" ) {
+            if( !$this->_isNoBodyTag() && !Utils::isSpanTag( $this->tagName ) && $html && substr( $html, -1 ) != "\n" ) {
                 $html .= "\n";
             }
             if( is_object( $content ) && method_exists( $content, '_toString' ) ) {
