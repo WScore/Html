@@ -42,7 +42,7 @@ class Tags
 {
     /**
      * @Inject
-     * @var \WScore\Tags\ToHtml
+     * @var \WScore\Html\ToHtml
      */
     public $_toString;
 
@@ -75,7 +75,7 @@ class Tags
      * construction of Tag object.
      *
      * @param ToHtml  $toString
-     * @return \WScore\Tags\Tags
+     * @return \WScore\Html\Tags
      */
     public function __construct( $toString=null )
     {
@@ -85,12 +85,12 @@ class Tags
     /**
      * @param string|null  $tagName
      * @param null|string $contents
-     * @return \WScore\Tags\Tags
+     * @return \WScore\Html\Tags
      */
     public function _new( $tagName=null, $contents=null )
     {
         $class = get_called_class();
-        /** @var $tags \WScore\Tags\Tags */
+        /** @var $tags \WScore\Html\Tags */
         $tags = new $class( $this->_toString );
         $tags->_setTagName( $tagName );
         $tags->_setContents( $contents );
