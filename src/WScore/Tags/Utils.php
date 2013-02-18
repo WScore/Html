@@ -31,6 +31,9 @@ class Utils
         'style' => '; ',
     );
 
+    /** @var string                 encoding */
+    public static $_encoding = 'UTF-8';
+
     /**
      * @param string $tagName
      * @return bool
@@ -83,5 +86,16 @@ class Utils
         if( substr( $name, -1 ) == '_' ) $name = substr( $name, 0, -1 );
         $name = str_replace( '_', '-', $name );
         return $name;
+    }
+
+    /**
+     * make string VERY safe for html.
+     *
+     * @param string $value
+     * @return string
+     */
+    public static function _safe( $value ) {
+        if( empty( $value ) ) return $value;
+        return htmlentities( $value, ENT_QUOTES, static::$_encoding );
     }
 }

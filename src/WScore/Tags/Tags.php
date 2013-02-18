@@ -41,6 +41,12 @@ namespace WScore\Tags;
  */
 class Tags
 {
+    /**
+     * @Inject
+     * @var \WScore\Tags\ToHtml
+     */
+    public $_toString;
+
     /** @var null                  name of tag, such as span */
     public $tagName    = null;
 
@@ -75,25 +81,27 @@ class Tags
     /**
      * construction of Tag object.
      *
-     * @param string|null  $tagName
-     * @param null|string $contents
-     * @return
+     * @param ToHtml  $toString
+     * @return \WScore\Tags\Tags
      */
-    public function __construct( $tagName=null, $contents=null )
+    public function __construct( $toString=null )
     {
-        $this->_setTagName( $tagName );
-        $this->_setContents( $contents );
+        if( isset( $toString ) ) $this->_toString = $toString;
     }
 
     /**
      * @param string|null  $tagName
      * @param null|string $contents
-     * @return
+     * @return \WScore\Tags\Tags
      */
     public function _new( $tagName=null, $contents=null )
     {
         $class = get_called_class();
-        return new $class( $tagName, $contents );
+        /** @var $tags \WScore\Tags\Tags */
+        $tags = new $class( $this->_toString );
+        $tags->_setTagName( $tagName );
+        $tags->_setContents( $contents );
+        return $tags;
     }
 
     /**
@@ -125,16 +133,6 @@ class Tags
         }
         $this->_setAttribute( $name, true );
         return $this;
-    }
-    /**
-     * make string VERY safe for html.
-     *
-     * @param string $value
-     * @return string
-     */
-    public static function _safe( $value ) {
-        if( empty( $value ) ) return $value;
-        return htmlentities( $value, ENT_QUOTES, static::$_encoding );
     }
 
     /**
@@ -287,64 +285,17 @@ class Tags
      * @param string $head
      * @return string
      */
-    protected function _toContents( $head="" ) {
-        $html = '';
-        if( empty( $this->contents ) ) return $html;
-        foreach( $this->contents as $content ) {
-            if( !$this->_isNoBodyTag() && !Utils::isSpanTag( $this->tagName ) && $html && substr( $html, -1 ) != "\n" ) {
-                $html .= "\n";
-            }
-            if( is_object( $content ) && method_exists( $content, '_toString' ) ) {
-                $html .= $content->_toString( $head );
-            }
-            else {
-                $html .= $head . (string) $content;
-            }
-        }
-        return $html;
-    }
-
-    /**
-     * @return string
-     */
-    protected function _toAttribute() {
-        $attr = '';
-        if( !empty( $this->_attributes ) )
-            foreach( $this->_attributes as $name => $value ) {
-                if( $value instanceof \Closure ) {
-                    $value = $value(); // wrapped by closure. use it as is.
-                }
-                else {
-                    $value = static::_safe( $value ); // make it very safe.
-                }
-                $attr .= " {$name}=\"{$value}\"";
-            }
-        return $attr;
-    }
-
-    /**
-     * @param string $head
-     * @return string
-     */
-    protected function _toString( $head='' )
+    public function _toString( $head='' )
     {
         $html = $head;
         if( $this->_isNoBodyTag() ) {
-            // create tag without content, such as <tag attributes... />
-            $html .= "<{$this->tagName}" . $this->_toAttribute() . ' />';
+            $html .= $this->_toString->noBodyTag( $this );
         }
         elseif( $this->_isSpanTag() || count( $this->contents ) == 1 ) {
-            // short tag such as <tag>only one content</tag>
-            $html .= "<{$this->tagName}" . $this->_toAttribute() . ">";
-            $html .= $this->_toContents();
-            $html .= "</{$this->tagName}>";
+            $html .= $this->_toString->oneContentTag( $this );
         }
-        else { // create tag with contents inside.
-            $html .= "<{$this->tagName}" . $this->_toAttribute() . ">";
-            $html .= "\n";
-            $html .= $this->_toContents( $head . '  ' );
-            if( substr( $html, -1 ) != "\n" ) $html .= "\n";
-            $html .= $head . "</{$this->tagName}>";
+        else {
+            $html .= $this->_toString->contentTag( $this, $head );
         }
         if( !$this->_isSpanTag() && !$this->_isNoBodyTag() ) {
             // add new-line, except for in-line tags.
