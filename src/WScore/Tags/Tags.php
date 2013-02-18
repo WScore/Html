@@ -55,12 +55,6 @@ class Tags
     /** @var array                 array of attributes       */
     public $_attributes = array();
 
-    /** @var bool                  for form element's name   */
-    public $multiple = false;
-
-    /** @var string                 encoding */
-    public static $_encoding = 'UTF-8';
-
     /** @var bool                   true for tags such as <img /> */
     public $_noBodyTag = false;
     // +----------------------------------------------------------------------+
