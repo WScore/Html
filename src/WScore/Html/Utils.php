@@ -1,5 +1,5 @@
 <?php
-namespace WScore\Tags;
+namespace WScore\Html;
 
 class Utils
 {

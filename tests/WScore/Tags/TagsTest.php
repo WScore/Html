@@ -1,7 +1,7 @@
 <?php
-namespace WScore\tests\Tags;
+namespace WScore\tests\Html;
 
-use \WScore\Tags\Tags as Tags;
+use \WScore\Html\Tags as Tags;
 
 class TagsTest extends \PHPUnit_Framework_TestCase
 {
