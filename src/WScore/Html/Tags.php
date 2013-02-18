@@ -89,9 +89,8 @@ class Tags
      */
     public function _new( $tagName=null, $contents=null )
     {
-        $class = get_called_class();
         /** @var $tags \WScore\Html\Tags */
-        $tags = new $class( $this->_toString );
+        $tags = clone( $this ); 
         $tags->_setTagName( $tagName );
         $tags->_setContents( $contents );
         return $tags;
