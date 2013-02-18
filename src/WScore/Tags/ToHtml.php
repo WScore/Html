@@ -6,6 +6,32 @@ class ToHtml
     /**
      * create tag without content, such as <tag attributes... />
      *
+     * @param Tags   $tags
+     * @param string $head
+     * @return string
+     */
+    public function toString( $tags, $head='' )
+    {
+        $html = $head;
+        if( $tags->_isNoBodyTag() ) {
+            $html .= $this->noBodyTag( $tags );
+        }
+        elseif( $tags->_isSpanTag() || count( $tags->contents ) == 1 ) {
+            $html .= $this->oneContentTag( $tags );
+        }
+        else {
+            $html .= $this->contentTag( $tags, $head );
+        }
+        if( !$tags->_isSpanTag() && !$tags->_isNoBodyTag() ) {
+            // add new-line, except for in-line tags.
+            $html .= "\n";
+        }
+        return $html;
+    }
+
+    /**
+     * create tag without content, such as <tag attributes... />
+     *
      * @param Tags $tags
      * @return string
      */

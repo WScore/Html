@@ -286,21 +286,7 @@ class Tags
      */
     public function _toString( $head='' )
     {
-        $html = $head;
-        if( $this->_isNoBodyTag() ) {
-            $html .= $this->_toString->noBodyTag( $this );
-        }
-        elseif( $this->_isSpanTag() || count( $this->contents ) == 1 ) {
-            $html .= $this->_toString->oneContentTag( $this );
-        }
-        else {
-            $html .= $this->_toString->contentTag( $this, $head );
-        }
-        if( !$this->_isSpanTag() && !$this->_isNoBodyTag() ) {
-            // add new-line, except for in-line tags.
-            $html .= "\n";
-        }
-        return $html;
+        return $this->_toString->toString( $this, $head );
     }
     /**
      * @return string
