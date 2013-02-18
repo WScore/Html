@@ -90,7 +90,7 @@ class Tags
     public function _new( $tagName=null, $contents=null )
     {
         /** @var $tags \WScore\Html\Tags */
-        $tags = clone( $this ); 
+        $tags = clone( $this );
         $tags->_setTagName( $tagName );
         $tags->_setContents( $contents );
         return $tags;
