@@ -35,7 +35,7 @@ class ToHtml
      * @param Tags $tags
      * @return string
      */
-    public function noBodyTag( $tags )
+    private function noBodyTag( $tags )
     {
         $html = "<{$tags->tagName}" . $this->toAttribute( $tags ) . ' />';
         return $html;
@@ -47,7 +47,7 @@ class ToHtml
      * @param Tags $tags
      * @return string
      */
-    public function oneContentTag( $tags )
+    private function oneContentTag( $tags )
     {
         $html  = "<{$tags->tagName}" . $this->toAttribute( $tags ) . ">";
         $html .= $this->toContents( $tags );
@@ -62,7 +62,7 @@ class ToHtml
      * @param string $head
      * @return string
      */
-    public function contentTag( $tags, $head='' )
+    private function contentTag( $tags, $head='' )
     {
         $html  = "<{$tags->tagName}" . $this->toAttribute( $tags ) . ">";
         $html .= "\n";
@@ -76,7 +76,8 @@ class ToHtml
      * @param string $head
      * @return string
      */
-    public function toContents( $tags, $head="" ) {
+    private function toContents( $tags, $head="" ) 
+    {
         $html = '';
         if( empty( $tags->contents ) ) return $html;
         foreach( $tags->contents as $content ) {
@@ -97,7 +98,8 @@ class ToHtml
      * @param Tags    $tags
      * @return string
      */
-    public function toAttribute( $tags ) {
+    private function toAttribute( $tags ) 
+    {
         $attr = '';
         if( !empty( $tags->_attributes ) )
             foreach( $tags->_attributes as $name => $value ) {
