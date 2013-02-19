@@ -9,7 +9,7 @@ class TagsTest extends \PHPUnit_Framework_TestCase
     public $tags;
     public function setUp()
     {
-        $this->tags = include( __DIR__ . '/../../../scripts/instance.php' );
+        $this->tags = include( __DIR__ . '/../../../scripts/tags.php' );
     }
     // +----------------------------------------------------------------------+
     function test_short_attribute()
