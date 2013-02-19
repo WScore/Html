@@ -180,6 +180,18 @@ class Tags
     }
 
     /**
+     * @param array $attributes
+     * @return \WScore\Html\Tags
+     */
+    public function _assignAttributes( $attributes )
+    {
+        if( empty( $attributes ) ) return $this;
+        foreach( $attributes as $name => $value ) {
+            $this->_setAttribute( $name, $value );
+        }
+        return $this;
+    }
+    /**
      * set attribute. if connector is not set, attribute is replaced.
      *
      * @param string       $name
@@ -187,7 +199,7 @@ class Tags
      * @param bool|string  $connector
      * @return Tags
      */
-    protected function _setAttribute( $name, $value, $connector=null )
+    public function _setAttribute( $name, $value, $connector=null )
     {
         if( is_array( $value ) && !empty( $value ) ) {
             foreach( $value as $val ) {
