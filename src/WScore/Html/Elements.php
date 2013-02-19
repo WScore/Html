@@ -68,7 +68,7 @@ class Elements extends Tags
             if( isset( $this->_attributes[ 'value' ] ) && isset( $this->_attributes[ 'type' ] ) ) {
                 $type = strtolower( $this->_attributes[ 'type' ] );
                 if( in_array( $type, array( 'checkbox', 'radio' ) ) ) {
-                    $id .= '_' . $this->_attributes[ 'type' ];
+                    $id .= '_' . $this->_attributes[ 'value' ];
                 }
             }
         }

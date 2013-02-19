@@ -109,18 +109,18 @@ class ElementsTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $input Elements */
         $input = $this->elements->input;
-        $input->type( 'checkbox' )->name( 'tests' );
-        $this->assertContains( '<input type="checkbox" name="tests" />', (string) $input );
+        $input->type( 'checkbox' )->name( 'tests' )->value( 'v1' );
+        $this->assertContains( '<input type="checkbox" name="tests" value="v1" />', (string) $input );
 
         $input->_setId();
-        $this->assertContains( '<input type="checkbox" name="tests" id="tests" />', (string) $input );
-
-        $input->_setMultipleName();
-        $input->_setId();
-        $this->assertContains( '<input type="checkbox" name="tests[]" id="tests__" />', (string) $input );
+        $this->assertContains( '<input type="checkbox" name="tests" value="v1" id="tests_v1" />', (string) $input );
 
         $input->_setMultipleName();
         $input->_setId();
-        $this->assertContains( '<input type="checkbox" name="tests[][]" id="tests____" />', (string) $input );
+        $this->assertContains( '<input type="checkbox" name="tests[]" value="v1" id="tests___v1" />', (string) $input );
+
+        $input->_setMultipleName();
+        $input->_setId();
+        $this->assertContains( '<input type="checkbox" name="tests[][]" value="v1" id="tests_____v1" />', (string) $input );
     }
 }
