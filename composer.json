@@ -10,5 +10,11 @@
     "minimum-stability": "dev",
     "require": {
 
+    },
+    "autoload": {
+        "psr-0": {
+            "WScore\\DiContainer": "src/"
+        }
     }
+
 }
