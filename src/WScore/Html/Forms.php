@@ -42,6 +42,7 @@ class Forms
      */
     public function __call( $method, $args )
     {
+        if( $method == 'check' ) $method = 'checkbox';
         $args = array_merge( array( $method ), $args );
         return call_user_func_array( array( $this, 'input' ), $args );
     }
@@ -59,6 +60,14 @@ class Forms
         $ta->_assignAttributes( $attributes );
         return $ta;
     }
+
+    /**
+     * @param string $name
+     * @param array  $items
+     * @param array  $checked
+     * @param array  $attributes
+     * @return Elements
+     */
     public function select( $name, $items, $checked=array(), $attributes=array() )
     {
         /** @var $form Elements */
@@ -68,7 +77,6 @@ class Forms
         if( array_key_exists( 'multiple', $attributes ) ) $form->_setMultipleName();
         return $form;
     }
-
 
     /**
      * makes option list for Select box.
