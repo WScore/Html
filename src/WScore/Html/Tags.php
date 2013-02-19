@@ -187,7 +187,7 @@ class Tags
     {
         if( empty( $attributes ) ) return $this;
         foreach( $attributes as $name => $value ) {
-            $this->_setAttribute( $name, $value );
+            $this->$name( $value );
         }
         return $this;
     }
