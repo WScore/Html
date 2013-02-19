@@ -84,4 +84,82 @@ class FormsTest extends \PHPUnit_Framework_TestCase
         $form = $this->forms->radio( 'user_OK', 'YES' );
         $this->assertEquals( '<input type="radio" name="user_OK" value="YES" />', (string) $form );
     }
+    // +----------------------------------------------------------------------+
+    //  test on select
+    // +----------------------------------------------------------------------+
+    function test_select()
+    {
+        $lang = array(
+            array( 'eng', 'english' ),
+            array( 'ger', 'german' ),
+            array( 'fra', 'french' ),
+        );
+        $form = $this->forms->select( 'lang', $lang, 'ger' );
+        $this->assertEquals( '<select name="lang">
+  <option value="eng">english</option>
+  <option value="ger" selected="selected">german</option>
+  <option value="fra">french</option>
+</select>' . "\n", (string) $form );
+    }
+
+    function test_select_with_group()
+    {
+        $lang = array(
+            array( 'eng', 'english' ),
+            array( 'ger', 'german', 'europe' ),
+            array( 'fra', 'french', 'europe' ),
+            array( 'spa', 'spanish', 'europe' ),
+            array( 'jpn', 'japanese' ),
+            array( 'zhi', 'chinese', 'asia' ),
+            array( 'kor', 'korean', 'asia' ),
+        );
+        $form = $this->forms->select( 'lang', $lang, array( 'ger', 'zhi' ), array( 'multiple' => true ) );
+        $this->assertEquals( '<select name="lang[]" multiple="multiple">
+  <option value="eng">english</option>
+  <optgroup label="europe">
+    <option value="ger" selected="selected">german</option>
+    <option value="fra">french</option>
+    <option value="spa">spanish</option>
+  </optgroup>
+  <option value="jpn">japanese</option>
+  <optgroup label="asia">
+    <option value="zhi" selected="selected">chinese</option>
+    <option value="kor">korean</option>
+  </optgroup>
+</select>' . "\n", (string) $form );
+    }
+    // +----------------------------------------------------------------------+
+    function test_radio_in_box()
+    {
+        $ages = array(
+            array( '10', 'teenage' ),
+            array( '20', 'twenties' ),
+            array( '30', 'thirtish' ),
+        );
+        $form = $this->forms->radioList( 'user_age', $ages, '20' );
+        $this->assertEquals( '<div class="forms-DivList"><nl>
+  <li><label><input type="radio" name="user_age" value="10" />teenage</label></li>
+  <li><label><input type="radio" name="user_age" value="20" checked="checked" />twenties</label></li>
+  <li><label><input type="radio" name="user_age" value="30" />thirtish</label></li>
+</nl>
+</div>'."\n", (string) $form );
+    }
+
+    function test_check_in_box()
+    {
+        $ages = array(
+            array( '10', 'teenage' ),
+            array( '20', 'twenties' ),
+            array( '30', 'thirtish' ),
+        );
+        $form = $this->forms->checkList( 'user_age', $ages, '20' );
+        $form = (string) $form;
+        $this->assertEquals( '<div class="forms-DivList"><nl>
+  <li><label><input type="checkbox" name="user_age[]" value="10" />teenage</label></li>
+  <li><label><input type="checkbox" name="user_age[]" value="20" checked="checked" />twenties</label></li>
+  <li><label><input type="checkbox" name="user_age[]" value="30" />thirtish</label></li>
+</nl>
+</div>'."\n", $form );
+    }
+    // +----------------------------------------------------------------------+
 }

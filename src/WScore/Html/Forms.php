@@ -9,6 +9,9 @@ class Forms
      */
     public $elements;
 
+    // +--------------------------------------------------------------+
+    //  construction
+    // +--------------------------------------------------------------+
     /**
      * @param \WScore\Html\Elements $elements
      * @return \WScore\Html\Forms
@@ -18,6 +21,9 @@ class Forms
         if( $elements ) $this->elements = $elements;
     }
 
+    // +--------------------------------------------------------------+
+    //  basic input elements
+    // +--------------------------------------------------------------+
     /**
      * for input elements: text, password, date, etc.
      *
@@ -61,6 +67,9 @@ class Forms
         return $ta;
     }
 
+    // +--------------------------------------------------------------+
+    //  select elements
+    // +--------------------------------------------------------------+
     /**
      * @param string $name
      * @param array  $items
@@ -117,5 +126,62 @@ class Forms
                 $select->_contain( $option );
             }
         }
+    }
+    // +--------------------------------------------------------------+
+    //  inputs (radio/checkbox) within div>nl>label
+    //  returns div > nl > [ li > label > check/radio ][ li ]
+    // +--------------------------------------------------------------+
+    /**
+     * @param string $name
+     * @param array  $items
+     * @param array  $checked
+     * @param array  $attributes
+     * @return Elements
+     */
+    public function radioList( $name, $items, $checked=array(), $attributes=array() )
+    {
+        return $this->divList( 'radio', $name, $items, $checked, $attributes );
+    }
+
+    /**
+     * @param string $name
+     * @param array  $items
+     * @param array  $checked
+     * @param array  $attributes
+     * @return Elements
+     */
+    public function checkList( $name, $items, $checked=array(), $attributes=array() )
+    {
+        $div = $this->divList( 'checkbox', $name, $items, $checked, $attributes );
+        $div->_setMultipleName();
+        return $div;
+    }
+
+    /**
+     * @param string $type
+     * @param string $name
+     * @param array  $items
+     * @param array  $checked
+     * @param array  $attributes
+     * @return Elements
+     */
+    public function divList( $type, $name, $items, $checked=array(), $attributes=array() )
+    {
+        if( !is_array( $checked ) ) $checked = array( $checked );
+        /** @var $list Elements */
+        /** @var $div  Elements */
+        $list = $this->elements->nl;
+        $div = $this->elements->div( $list )->class_( 'forms-DivList');
+        foreach( $items as $item ) {
+            $value = $item[0];
+            $label = $item[1];
+            /** @var $check Elements */
+            $check = $this->$type( $name, $value, $attributes );
+            if( in_array( $value, $checked ) ) $check->checked( true );
+            $list->_contain(
+                $this->elements->li( $this->elements->label( $check, $label ) )
+            );
+        }
+        return $div;
     }
 }
