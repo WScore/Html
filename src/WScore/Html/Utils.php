@@ -22,7 +22,7 @@ class Utils
 
     /** @var array                  in-line tags   */
     public static $_tag_span = array(
-        'span', 'p', 'strong', 'i', 'sub', 'li', 'a', 'label',
+        'span', 'p', 'strong', 'i', 'sub', 'li', 'a', 'label', 'textarea',
     );
 
     /** @var array                  how to connect attribute values */
