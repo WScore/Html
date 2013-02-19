@@ -36,4 +36,16 @@ class FormsTest extends \PHPUnit_Framework_TestCase
         $input = $this->forms->text( 'name1', 'value2' );
         $this->assertContains( '<input type="text" name="name1" value="value2" />', (string) $input );
     }
+
+    function test_textArea()
+    {
+        $ta = $this->forms->textArea( 'text-area' );
+        $this->assertContains( '<textarea name="text-area"></textarea>', (string) $ta );
+
+        $ta = $this->forms->textArea( 'text-area', 'value2' );
+        $this->assertContains( '<textarea name="text-area">value2</textarea>', (string) $ta );
+
+        $ta = $this->forms->textArea( 'text-area' )->_contain( 'value3' );
+        $this->assertContains( '<textarea name="text-area">value3</textarea>', (string) $ta );
+    }
 }
