@@ -123,4 +123,21 @@ class ElementsTest extends \PHPUnit_Framework_TestCase
         $input->_setId();
         $this->assertContains( '<input type="checkbox" name="tests[][]" value="v1" id="tests_____v1" />', (string) $input );
     }
+
+    function test_walkSetId_recursively()
+    {
+        /** @var $ul Elements */
+        $ul = $this->elements->ul;
+        $ul->_contain( $this->elements->input->type( 'text' )->name( 'test1' ) );
+        $ul->_contain( $this->elements->input->type( 'text' )->name( 'test2' ) );
+
+        $ul->_walkSetId();
+        $this->assertContains( '<input type="text" name="test1" id="test1" />', (string) $ul );
+        $this->assertContains( '<input type="text" name="test2" id="test2" />', (string) $ul );
+
+        $ul->_setMultipleName();
+        $ul->_walkSetId();
+        $this->assertContains( '<input type="text" name="test1[]" id="test1__" />', (string) $ul );
+        $this->assertContains( '<input type="text" name="test2[]" id="test2__" />', (string) $ul );
+    }
 }
