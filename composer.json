@@ -1,0 +1,14 @@
+{
+    "name": "wscore/html",
+    "description": "Html tag generator classes.",
+    "authors": [
+        {
+            "name": "Asao Kamei",
+            "email": "kamei@workspot.jp"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+    }
+}
