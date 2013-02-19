@@ -2,5 +2,5 @@
 namespace WScore\Html;
 
 require_once( __DIR__ . '/require.php' );
-$tags = new Tags( new ToHtml() );
+$tags = new Elements( new ToHtml() );
 return $tags;
