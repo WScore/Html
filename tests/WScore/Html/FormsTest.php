@@ -137,11 +137,11 @@ class FormsTest extends \PHPUnit_Framework_TestCase
             array( '30', 'thirtish' ),
         );
         $form = $this->forms->radioList( 'user_age', $ages, '20' );
-        $this->assertEquals( '<div class="forms-DivList"><nl>
+        $this->assertEquals( '<div class="forms-DivList"><ul>
   <li><label><input type="radio" name="user_age" value="10" />teenage</label></li>
   <li><label><input type="radio" name="user_age" value="20" checked="checked" />twenties</label></li>
   <li><label><input type="radio" name="user_age" value="30" />thirtish</label></li>
-</nl>
+</ul>
 </div>'."\n", (string) $form );
     }
 
@@ -154,11 +154,11 @@ class FormsTest extends \PHPUnit_Framework_TestCase
         );
         $form = $this->forms->checkList( 'user_age', $ages, '20' );
         $form = (string) $form;
-        $this->assertEquals( '<div class="forms-DivList"><nl>
+        $this->assertEquals( '<div class="forms-DivList"><ul>
   <li><label><input type="checkbox" name="user_age[]" value="10" />teenage</label></li>
   <li><label><input type="checkbox" name="user_age[]" value="20" checked="checked" />twenties</label></li>
   <li><label><input type="checkbox" name="user_age[]" value="30" />thirtish</label></li>
-</nl>
+</ul>
 </div>'."\n", $form );
     }
     // +----------------------------------------------------------------------+
