@@ -171,7 +171,7 @@ class Forms
         if( !is_array( $checked ) ) $checked = array( $checked );
         /** @var $list Elements */
         /** @var $div  Elements */
-        $list = $this->elements->nl;
+        $list = $this->elements->ul;
         $div = $this->elements->div( $list )->class_( 'forms-DivList');
         foreach( $items as $item ) {
             $value = $item[0];
