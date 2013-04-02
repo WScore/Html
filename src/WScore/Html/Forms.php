@@ -1,6 +1,12 @@
 <?php
 namespace WScore\Html;
 
+/**
+ * Class Forms
+ * @package WScore\Html
+ *
+ * @cacheable
+ */
 class Forms
 {
     /**

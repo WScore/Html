@@ -1,6 +1,12 @@
 <?php
 namespace WScore\Html;
 
+/**
+ * Class Utils
+ * @package WScore\Html
+ *
+ * @cacheable
+ */
 class Utils
 {
 

@@ -1,6 +1,12 @@
 <?php
 namespace WScore\Html;
 
+/**
+ * Class Elements
+ * @package WScore\Html
+ *
+ * @cacheable
+ */
 class Elements extends Tags
 {
     /**

@@ -1,6 +1,12 @@
 <?php
 namespace WScore\Html;
 
+/**
+ * Class ToHtml
+ * @package WScore\Html
+ *
+ * @cacheable
+ */
 class ToHtml
 {
     /**

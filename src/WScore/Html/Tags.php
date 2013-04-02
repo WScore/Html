@@ -37,6 +37,8 @@ namespace WScore\Html;
  * @method action
  * @method method
  * @method strong
+ *
+ * @cacheable
  */
 class Tags
 {
