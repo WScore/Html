@@ -248,7 +248,7 @@ class Tags
 
     /**
      * @param null|string $find
-     * @return array|null|string|Tags
+     * @return array|string|Tags
      */
     public function _get( $find=null )
     {
@@ -266,7 +266,7 @@ class Tags
                 }
             }
         }
-        return null;
+        return array();
     }
 
     /**
