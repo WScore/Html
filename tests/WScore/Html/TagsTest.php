@@ -136,6 +136,11 @@ class TagsTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue( $ul instanceof Tags );
         $this->assertEquals( 'ul', $ul->tagName );
 
+        // get content whose tagName is 'ul'.
+        $ul = $div->_get( 'ul' );
+        $this->assertTrue( $ul instanceof Tags );
+        $this->assertEquals( 'ul', $ul->tagName );
+
         // get all contents, which has 2 contents that are same as...
         $contents = $div->_get();
         $this->assertEquals( 'just a text', $contents[0] );
