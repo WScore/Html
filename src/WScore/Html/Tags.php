@@ -247,6 +247,29 @@ class Tags
     }
 
     /**
+     * @param null|string $find
+     * @return array|null|string|Tags
+     */
+    public function _get( $find=null )
+    {
+        if( is_null( $find ) ) {
+            return $this->contents;
+        }
+        if( is_numeric( $find ) && array_key_exists( $find, $this->contents ) ) {
+            return $this->contents[ $find ];
+        }
+        if( is_string( $find ) ) {
+            // find tagName.
+            foreach( $this->contents as $tag ) {
+                if( $tag instanceof Tags && $tag->tagName === $find ) {
+                    return $tag;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * set class name. adds to the existing class.
      *
      * @param string $class

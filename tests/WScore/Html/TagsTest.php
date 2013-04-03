@@ -121,5 +121,25 @@ class TagsTest extends \PHPUnit_Framework_TestCase
         $text = (string)  $tags( 'a', 'a link' )->href( 'do.php' )->style( 'style1' )->style( 'style2' );
         $this->assertContains( '<a href="do.php" style="style1; style2">a link</a>', $text );
     }
+    public function test_get_contents()
+    {
+        $tags = $this->tags;
+        $div = $tags->div;
+        $div->_contain( 'just a text' );
+        $div->_contain( $tags->ul->_contain( 'hi' ) );
+
+        // get 0th content, should be the text same as...
+        $this->assertEquals( 'just a text', $div->_get(0) );
+
+        // get 1st content, should be Tags object with 'ul' tagName.
+        $ul = $div->_get(1);
+        $this->assertTrue( $ul instanceof Tags );
+        $this->assertEquals( 'ul', $ul->tagName );
+
+        // get all contents, which has 2 contents that are same as...
+        $contents = $div->_get();
+        $this->assertEquals( 'just a text', $contents[0] );
+        $this->assertSame( $ul, $contents[1] );
+    }
 }
 
