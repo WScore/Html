@@ -68,7 +68,7 @@ class Forms
     public function textArea( $name='', $value='', $attributes=array() )
     {
         /** @var $ta Elements */
-        $value = Utils::_safe( $value );
+        $value = $this->elements->utils->_safe( $value );
         $ta = $this->elements->textarea( $value )->name( $name );
         $ta->_assignAttributes( $attributes );
         return $ta;

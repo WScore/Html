@@ -48,6 +48,12 @@ class Tags
      */
     public $_toString;
 
+    /**
+     * @Inject
+     * @var \WScore\Html\Utils
+     */
+    public $utils;
+
     /** @var null                  name of tag, such as span */
     public $tagName    = null;
 
@@ -76,12 +82,14 @@ class Tags
     /**
      * construction of Tag object.
      *
-     * @param ToHtml  $toString
+     * @param ToHtml $toString
+     * @param Utils $utils
      * @return \WScore\Html\Tags
      */
-    public function __construct( $toString=null )
+    public function __construct( $toString=null, $utils=null )
     {
         if( isset( $toString ) ) $this->_toString = $toString;
+        if( isset( $utils ) ) $this->utils = $utils;
     }
 
     /**
@@ -93,7 +101,7 @@ class Tags
     {
         $class = get_called_class();
         /** @var $tags \WScore\Html\Tags */
-        $tags = new $class( $this->_toString );
+        $tags = new $class( $this->_toString, $this->utils );
         $tags->_setTagName( $tagName );
         $tags->_setContents( $contents );
         return $tags;
@@ -141,7 +149,7 @@ class Tags
     }
 
     public function _isSpanTag() {
-        return Utils::isSpanTag( $this->tagName );
+        return $this->utils->isSpanTag( $this->tagName );
     }
 
     public function _isNoBodyTag() {
@@ -159,8 +167,8 @@ class Tags
     protected function _setTagName( $tagName )
     {
         if( empty( $tagName ) ) return $this;
-        $this->tagName = Utils::normalizeTagName( $tagName );
-        $this->_noBodyTag = Utils::isNoBodyTag( $this->tagName );
+        $this->tagName = $this->utils->normalizeTagName( $tagName );
+        $this->_noBodyTag = $this->utils->isNoBodyTag( $this->tagName );
         return $this;
     }
 
@@ -213,11 +221,11 @@ class Tags
             $value = '';
         }
         if( $value === false ) return $this;     // ignore the property.
-        $name = Utils::normalize( $name );
+        $name = $this->utils->normalize( $name );
         if( $value === true  ) $value = $name;   // same as name (checked="checked")
         // set connector if it is not set.
         if( $connector === null ) {
-            $connector = Utils::getConnector( $name ); // default is to replace value.
+            $connector = $this->utils->getConnector( $name ); // default is to replace value.
         }
         // set attribute.
         if( !isset( $this->_attributes[ $name ] ) // new attribute.

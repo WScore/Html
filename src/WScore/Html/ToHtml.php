@@ -10,6 +10,19 @@ namespace WScore\Html;
 class ToHtml
 {
     /**
+     * @Inject
+     * @var \WScore\Html\Utils
+     */
+    public $utils;
+
+    /**
+     * @param Utils $utils
+     */
+    public function __construct( $utils=null )
+    {
+        if( isset( $utils ) ) $this->utils = $utils;
+    }
+    /**
      * create tag without content, such as <tag attributes... />
      *
      * @param Tags   $tags
@@ -87,7 +100,7 @@ class ToHtml
         $html = '';
         if( empty( $tags->contents ) ) return $html;
         foreach( $tags->contents as $content ) {
-            if( !$tags->_isNoBodyTag() && !Utils::isSpanTag( $tags->tagName ) && $html && substr( $html, -1 ) != "\n" ) {
+            if( !$tags->_isNoBodyTag() && !$this->utils->isSpanTag( $tags->tagName ) && $html && substr( $html, -1 ) != "\n" ) {
                 $html .= "\n";
             }
             if( is_object( $content ) && method_exists( $content, '_toString' ) ) {
@@ -113,7 +126,7 @@ class ToHtml
                     $value = $value(); // wrapped by closure. use it as is.
                 }
                 else {
-                    $value = Utils::_safe( $value ); // make it very safe.
+                    $value = $this->utils->_safe( $value ); // make it very safe.
                 }
                 $attr .= " {$name}=\"{$value}\"";
             }
