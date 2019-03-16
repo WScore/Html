@@ -18,6 +18,6 @@ class InputTest extends TestCase
         $html = Form::input('text', 'name-test')
             ->name('nameA')
             ->name('nameB');
-        $this->assertEquals('<input type="text" name="nameB" />', (string) $html);
+        $this->assertEquals('<input type="text" name="nameB">', (string) $html);
     }
 }

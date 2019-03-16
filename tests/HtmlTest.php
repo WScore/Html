@@ -57,7 +57,7 @@ class HtmlTest extends TestCase
         $tag = Html::create('test')
             ->setHasCloseTag(false);
         $html = (string) $tag;
-        $this->assertEquals('<test />', $html);
+        $this->assertEquals('<test>', $html);
     }
 
     public function testSetContents()

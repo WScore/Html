@@ -16,7 +16,7 @@ class FormTest extends TestCase
     public function testInput()
     {
         $html = Form::input('radio', 'Html', 'tested');
-        $this->assertEquals('<input type="radio" name="Html" value="tested" />', (string) $html);
+        $this->assertEquals('<input type="radio" name="Html" value="tested">', (string) $html);
     }
 
     public function testTextArea()
@@ -24,4 +24,23 @@ class FormTest extends TestCase
         $html = Form::textArea('Text', 'Area');
         $this->assertEquals('<textarea name="Text">Area</textarea>', (string) $html);
     }
+
+    public function testOpen()
+    {
+        $html = Form::open('test.php');
+        $this->assertEquals('<form action="test.php" method="post"' . '>', (string) $html);
+    }
+
+    public function testOpenForUpload()
+    {
+        $html = Form::openForUpload('test.php');
+        $this->assertEquals('<form action="test.php" method="post"' . ' enctype="multipart/form-data">', (string) $html);
+    }
+
+    public function testClose()
+    {
+        $html = Form::close();
+        $this->assertEquals('</form>', (string) $html);
+    }
+
 }

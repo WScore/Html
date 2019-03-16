@@ -118,7 +118,7 @@ class Html
             }
             return "<{$attributes}>{$contents}</{$this->tagName}>";
         }
-        return "<{$attributes} />";
+        return "<{$attributes}>";
     }
 
     /**
