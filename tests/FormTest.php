@@ -16,13 +16,13 @@ class FormTest extends TestCase
     public function testInput()
     {
         $html = Form::input('radio', 'Html', 'tested');
-        $this->assertEquals('<input type="radio" name="Html" value="tested">', (string) $html);
+        $this->assertEquals('<input type="radio" name="Html" id="Html" value="tested">', (string) $html);
     }
 
     public function testTextArea()
     {
         $html = Form::textArea('Text', 'Area');
-        $this->assertEquals('<textarea name="Text">Area</textarea>', (string) $html);
+        $this->assertEquals('<textarea name="Text" id="Text">Area</textarea>', (string) $html);
     }
 
     public function testOpen()

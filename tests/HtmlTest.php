@@ -89,4 +89,13 @@ class HtmlTest extends TestCase
             ->style('styleB');
         $this->assertEquals('<test style="styleA; styleB"></test>', (string) $html);
     }
+
+    public function testMagicMethod()
+    {
+        $link = Html::create('a')
+            ->href('test.php')
+            ->target('_blank')
+            ->setContents('test');
+        $this->assertEquals('<a href="test.php" target="_blank">test</a>', (string) $link);
+    }
 }
