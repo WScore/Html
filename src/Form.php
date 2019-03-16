@@ -32,11 +32,12 @@ class Form
     }
 
     /**
-     * @return string
+     * @return Html
      */
-    public static function close(): string
+    public static function close(): Html
     {
-        return "</form>";
+        return Html::create("/form")
+            ->setHasCloseTag(false);
     }
 
     /**
