@@ -83,3 +83,36 @@ should result in following html code.
 <input type="radio" name="yes" id="yes" value="here">\n
 </ul>
 ```
+
+### Choices (radio, checkbox, and select)
+
+User `Form::choices` method to generate choices, such as radio buttons, checkboxes, and drop down selects.
+
+For radio buttons; 
+
+```php
+echo Form::choices('test', [
+    'val1' => 'label1', 
+    'val2' => 'label2'], 
+    'val2);
+```
+
+for checkboxes; 
+
+```php
+echo Form::choices('test', [
+    'val1' => 'label1', 
+    'val2' => 'label2'], 
+    'val2)
+    ->multiple();
+```
+
+and for drop-down selects; 
+
+```php
+echo Form::choices('test', [
+    'val1' => 'label1', 
+    'val2' => 'label2'], 
+    'val2)
+    ->expand(false);
+```
