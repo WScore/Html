@@ -4,16 +4,38 @@ declare(strict_types=1);
 
 namespace WScore\Html;
 
+/**
+ * Class Html
+ * @package WScore\Html
+ *
+ * @method $this href(string $target)
+ * @method $this target(string $target)
+ */
 class Html
 {
+    /**
+     * @var string
+     */
     private $tagName = '';
 
+    /**
+     * @var array
+     */
     private $attributes = [];
 
+    /**
+     * @var array
+     */
     private $contents = [];
 
+    /**
+     * @var bool
+     */
     private $hasCloseTag = true;
 
+    /**
+     * @var array
+     */
     public static $noCloseTags = [
         'img', 'input', 'br',
     ];
@@ -37,6 +59,16 @@ class Html
     }
 
     /**
+     * @param string $name
+     * @param array $arguments
+     * @return Html
+     */
+    public function __call($name, $arguments)
+    {
+        return $this->set($name, ...$arguments);
+    }
+
+    /**
      * @param string $key
      * @param bool|string $value
      * @param string $conn
@@ -47,6 +79,20 @@ class Html
         if ($value === false) {
             return $this->remove($key);
         }
+        if ($value === true) {
+            $value = $key;
+        }
+        return $this->add($key, $value, $conn);
+    }
+
+    /**
+     * @param string $key
+     * @param string $value
+     * @param string $conn
+     * @return $this
+     */
+    public function add(string $key, string $value, string $conn = ' '): self
+    {
         if (isset($this->attributes[$key]) && $this->attributes[$key]) {
             $this->attributes[$key] .= $conn . $value;
             return $this;
@@ -144,7 +190,7 @@ class Html
      */
     public function hasContents(): bool
     {
-        return $this->hasCloseTag;
+        return $this->hasCloseTag && count($this->contents)>0;
     }
 
     /**
@@ -176,5 +222,14 @@ class Html
     public function style(string $style): self
     {
         return $this->set('style', $style, '; ');
+    }
+
+    /**
+     * @param string $id
+     * @return Html
+     */
+    public function id(string  $id): self
+    {
+        return $this->reset('id', $id);
     }
 }
