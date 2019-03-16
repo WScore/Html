@@ -13,8 +13,15 @@ use PHPUnit\Framework\TestCase;
 
 class HtmlTest extends TestCase
 {
-    public function test0()
+    public function testInput()
     {
-        $this->assertTrue(true);
+        $html = Html::input('radio', 'Html', 'tested');
+        $this->assertEquals('<input type="radio" name="Html" value="tested" />', (string) $html);
+    }
+
+    public function testTextArea()
+    {
+        $html = Html::textArea('Text', 'Area');
+        $this->assertEquals('<textarea name="Text">Area</textarea>', (string) $html);
     }
 }

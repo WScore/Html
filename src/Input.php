@@ -9,7 +9,7 @@ class Input extends Tag
      */
     public function type(string $type): self
     {
-        return $this->resetAttribute('type', $type);
+        return $this->reset('type', $type);
     }
 
     /**
@@ -18,7 +18,7 @@ class Input extends Tag
      */
     public function name(string $name): self
     {
-        return $this->resetAttribute('name', $name);
+        return $this->reset('name', $name);
     }
 
     /**
@@ -27,6 +27,6 @@ class Input extends Tag
      */
     public function value(string $value): self
     {
-        return $this->resetAttribute('value', $value);
+        return $this->reset('value', $value);
     }
 }

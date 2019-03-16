@@ -12,7 +12,7 @@ class Tag
 
     private $contents = [];
 
-    private $hasContents = true;
+    private $hasCloseTag = true;
 
     public static $noCloseTags = [
         'img', 'input', 'br',
@@ -22,7 +22,7 @@ class Tag
     {
         $this->tagName = $tagName;
         if (in_array($tagName, self::$noCloseTags)) {
-            $this->setHasContents(false);
+            $this->setHasCloseTag(false);
         }
     }
 
@@ -42,10 +42,10 @@ class Tag
      * @param string $conn
      * @return $this
      */
-    public function setAttribute(string $key, $value, string $conn = ' '): self
+    public function set(string $key, $value, string $conn = ' '): self
     {
         if ($value === false) {
-            return $this->removeAttribute($key);
+            return $this->remove($key);
         }
         if (isset($this->attributes[$key]) && $this->attributes[$key]) {
             $this->attributes[$key] .= $conn . $value;
@@ -57,10 +57,19 @@ class Tag
 
     /**
      * @param string $key
+     * @return string|null
+     */
+    public function get(string $key): ?string
+    {
+        return array_key_exists($key, $this->attributes) ?$this->attributes[$key]: null;
+    }
+
+    /**
+     * @param string $key
      * @param string $value
      * @return $this
      */
-    public function resetAttribute(string $key, string $value): self
+    public function reset(string $key, string $value): self
     {
         $this->attributes[$key] = $value;
         return $this;
@@ -70,7 +79,7 @@ class Tag
      * @param string $key
      * @return $this
      */
-    public function removeAttribute(string $key): self
+    public function remove(string $key): self
     {
         unset($this->attributes[$key]);
         return $this;
@@ -80,7 +89,7 @@ class Tag
      * @param string $key
      * @return bool
      */
-    public function hasAttribute(string $key): bool
+    public function has(string $key): bool
     {
         return isset($this->attributes[$key]);
     }
@@ -102,7 +111,7 @@ class Tag
     public function toString(): string
     {
         $attributes = $this->makeAttributes();
-        if ($this->hasContents) {
+        if ($this->hasCloseTag) {
             $contents = implode("\n", $this->contents);
             if (count($this->contents) > 1) {
                 $contents = "\n" . $contents . "\n";
@@ -121,12 +130,12 @@ class Tag
     }
 
     /**
-     * @param bool $hasContents
+     * @param bool $hasCloseTag
      * @return $this
      */
-    public function setHasContents(bool $hasContents): self
+    public function setHasCloseTag(bool $hasCloseTag): self
     {
-        $this->hasContents = $hasContents;
+        $this->hasCloseTag = $hasCloseTag;
         return $this;
     }
 
@@ -135,7 +144,7 @@ class Tag
      */
     public function hasContents(): bool
     {
-        return $this->hasContents;
+        return $this->hasCloseTag;
     }
 
     /**
@@ -157,7 +166,7 @@ class Tag
      */
     public function class(string $class): self
     {
-        return $this->setAttribute('class', $class, ' ');
+        return $this->set('class', $class, ' ');
     }
 
     /**
@@ -166,6 +175,6 @@ class Tag
      */
     public function style(string $style): self
     {
-        return $this->setAttribute('style', $style, '; ');
+        return $this->set('style', $style, '; ');
     }
 }

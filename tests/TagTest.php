@@ -25,7 +25,7 @@ class TagTest extends TestCase
     public function testSetAttribute()
     {
         $tag = Tag::create('test')
-            ->setAttribute('name', 'tested');
+            ->set('name', 'tested');
         $html = $tag->toString();
         $this->assertStringStartsWith('<test ', $html);
         $this->assertStringEndsWith('</test>', $html);
@@ -35,8 +35,8 @@ class TagTest extends TestCase
     public function testSetAttributeWithConnector()
     {
         $tag = Tag::create('test')
-            ->setAttribute('name', 'tested')
-            ->setAttribute('name', 'tested', '--');
+            ->set('name', 'tested')
+            ->set('name', 'tested', '--');
         $html = $tag->toString();
         $this->assertStringContainsString('name="tested--tested"', $html);
     }
@@ -44,9 +44,9 @@ class TagTest extends TestCase
     public function testSetAttributeWithFalse()
     {
         $tag = Tag::create('test')
-            ->setAttribute('some', 'tested')
-            ->setAttribute('name', 'tested')
-            ->setAttribute('name', false);
+            ->set('some', 'tested')
+            ->set('name', 'tested')
+            ->set('name', false);
         $html = (string) $tag;
         $this->assertStringContainsString('some="tested"', $html);
         $this->assertStringNotContainsString('name="', $html);
@@ -55,7 +55,7 @@ class TagTest extends TestCase
     public function testHasNoContents()
     {
         $tag = Tag::create('test')
-            ->setHasContents(false);
+            ->setHasCloseTag(false);
         $html = (string) $tag;
         $this->assertEquals('<test />', $html);
     }
