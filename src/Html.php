@@ -226,7 +226,7 @@ class Html
 
     /**
      * @param string $id
-     * @return Html
+     * @return $this
      */
     public function id(string  $id): self
     {
