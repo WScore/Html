@@ -18,7 +18,9 @@ class Input extends Html
      */
     public function name(string $name): self
     {
-        return $this->reset('name', $name);
+        $this->reset('name', $name);
+        $id = str_replace(['[', ']'], '_', $name);
+        return $this->id($id);
     }
 
     /**
@@ -28,5 +30,14 @@ class Input extends Html
     public function value(string $value): self
     {
         return $this->reset('value', $value);
+    }
+
+    /**
+     * @param bool $required
+     * @return Input
+     */
+    public function required(bool $required = true): self
+    {
+        return $this->set('required', $required);
     }
 }
