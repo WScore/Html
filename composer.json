@@ -7,14 +7,17 @@
             "email": "kamei@workspot.jp"
         }
     ],
-    "minimum-stability": "dev",
+    "license": ["MIT"],
+    "minimum-stability": "stable",
     "require": {
-
+        "php": "^7.1"
     },
     "autoload": {
-        "psr-0": {
-            "WScore\\Html": "src/"
+        "psr-4": {
+            "WScore\\Html\\": "src/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
     }
-
 }
