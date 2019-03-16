@@ -8,14 +8,14 @@
 
 declare(strict_types=1);
 
-use WScore\Html\Html;
+use WScore\Html\Form;
 use PHPUnit\Framework\TestCase;
 
 class InputTest extends TestCase
 {
     public function testName()
     {
-        $html = Html::input('text', 'name-test')
+        $html = Form::input('text', 'name-test')
             ->name('nameA')
             ->name('nameB');
         $this->assertEquals('<input type="text" name="nameB" />', (string) $html);

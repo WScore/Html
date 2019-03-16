@@ -1,7 +1,7 @@
 <?php
 namespace WScore\Html;
 
-class Input extends Tag
+class Input extends Html
 {
     /**
      * @param string $type
