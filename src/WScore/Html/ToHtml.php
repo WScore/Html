@@ -1,5 +1,5 @@
 <?php
-namespace WScore\Html;
+namespace WScore\Html\WScore\Html;
 
 /**
  * Class ToHtml
