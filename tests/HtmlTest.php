@@ -9,6 +9,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use WScore\Html\Form;
 use WScore\Html\Html;
 
 class HtmlTest extends TestCase
@@ -97,5 +98,16 @@ class HtmlTest extends TestCase
             ->target('_blank')
             ->setContents('test');
         $this->assertEquals('<a href="test.php" target="_blank">test</a>', (string) $link);
+    }
+
+    public function testComplexExample()
+    {
+        $html = Html::create('ul')
+            ->class('form-list')
+            ->setContents(
+                Form::input('text', 'name')->placeholder('name here...'),
+                Form::input('radio', 'yes', 'here')
+            );
+        $this->assertEquals('', (string) $html);
     }
 }

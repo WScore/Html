@@ -3,48 +3,83 @@ WScore.Html
 
 Html tag generation class for PHP.
 
-Examples
---------
+Installation
+------------
 
-###Constructing
-
-```php
-$tags = include( __DIR__ . '/../../../scripts/tags.php' );
+```
+$ composer require wscore/html
 ```
 
-###Simple cases
+Sample Codes
+------------
 
-simple anchor link.
+###Basic HTML
+
+use `WScore\Html\Html` class to create an HTML object, as;
 
 ```php
-echo $tags->a( 'a link' )->href( 'do.php' )->target( '_blank' );
-// <a href="do.php" target="_blank">a link</a>
+use WScore\Html\Html;
+
+$html = Html::create('tagName')
+            ->set('attribute', 'value')
+            ->setContents('readme');
+echo (string) $html;
 ```
 
-html tag without body.
+should output HTML like, 
 
-```php
-echo $tags->img->important->src( 'image.img' );
-// <img important="important" src="image.img" />
+```html
+<tagName attribute="value">readme</tagName>
 ```
 
-quoting is done automatically.
+You can `set`, `add`, `remove`, `reset`, attributes. 
+
+Also magic method 
 
 ```php
-echo $tags->input->value( 'unsafe" string' );
-// <input value="unsafe&quot; string" />;
-
-echo $tags->input()->value( Tags::_wrap( $unsafe ) );
-// <input value="unsafe" string" />;
+$html = Html::create('a')
+            ->href('attribute', 'value') // magic method to set href attribute
+            ->target('_blank');
 ```
 
-###Nested tags
+
+### Form HTML
+
+use `WScore\Html\Form` class to create a HTML form object, as;
+
 
 ```php
-$tags->nl(
-    $tags->li( 'list item' ),
-    'some text',
-    $tags->li( $tags->a( 'link' )->href( 'link.html' ) )
-);
-// will generate...
+echo Form::open('check.php');
+echo Form::input('checkbox', 'keep', 'alive')->class('form-element');
+echo Form::close(); 
+```
+
+should create something like: 
+
+```html
+<form action="check.php" method="post">
+<input type="checkbox" name="keep" id="keep" value="alive" class="form-element">
+</form>
+```
+
+### Some Complex Case
+
+
+
+```php
+echo Html::create('ul')
+            ->class('form-list')
+            ->setContents(
+                Form::input('text', 'name')->placeholder('name here...'),
+                Form::input('radio', 'yes', 'here')
+            );
+```
+
+should result in following html code. 
+
+```html
+<ul class="form-list">\n
+<input type="text" name="name" id="name" placeholder="name here...">\n
+<input type="radio" name="yes" id="yes" value="here">\n
+</ul>
 ```
