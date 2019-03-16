@@ -162,7 +162,7 @@ class Html
         return isset($this->attributes[$key]);
     }
 
-    private function makeAttributes(): string
+    public function makeAttributes(): string
     {
         $list = [$this->tagName];
         foreach ($this->attributes as $key => $attribute) {
@@ -174,25 +174,17 @@ class Html
     }
 
     /**
-     * @param null|Html $html
      * @return string
+     * @throws \ReflectionException
      */
-    public function toString($html = null): string
+    public function toString(): string
     {
-        $html = $html ?: $this;
-        $attributes = $html->makeAttributes();
-        if ($html->hasCloseTag) {
-            $contents = implode("\n", $html->contents);
-            if (count($html->contents) > 1) {
-                $contents = "\n" . $contents . "\n";
-            }
-            return "<{$attributes}>{$contents}</{$html->tagName}>";
-        }
-        return "<{$attributes}>";
+        return ToString::from($this);
     }
 
     /**
      * @return string
+     * @throws \ReflectionException
      */
     public function __toString()
     {
@@ -255,5 +247,21 @@ class Html
     public function id(string  $id): self
     {
         return $this->reset('id', $id);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCloseTag(): bool
+    {
+        return $this->hasCloseTag;
+    }
+
+    /**
+     * @return array
+     */
+    public function getContents(): array
+    {
+        return $this->contents;
     }
 }

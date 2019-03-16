@@ -89,35 +89,11 @@ class Choices extends Input
     /**
      * @param null|Html $html
      * @return string
+     * @throws \ReflectionException
      */
     public function toString($html = null): string
     {
-        $form = clone($this);
-        if ($form->getTagName() === 'select') {
-            return $this->toSelectString($form);
-        }
-        if (empty($this->choices)) {
-            return $this->toChoiceString($form);
-        }
-        $html = '';
-        foreach ($form->getChoices() as $choice) {
-            $html .= Html::create('label')
-                ->setContents(
-                    $this->toChoiceString($choice) . ' ' . $choice->label) . "\n";
-        }
-        return $html;
-    }
-
-    private function toChoiceString(Choices $form): string
-    {
-        if (!$form->initValue) {
-            return parent::toString($form);
-        }
-        $values = (array) $form->initValue;
-        if (in_array($form->get('value'), $values)) {
-            $form->set('checked', true);
-        }
-        return parent::toString($form);
+        return ToString::from($this);
     }
 
     /**
@@ -142,17 +118,6 @@ class Choices extends Input
         return $choices;
     }
 
-    private function toSelectString(Choices $form): string
-    {
-        if ($form->multiple) {
-            $form->name($form->get('name') . '[]');
-        }
-        foreach ($this->choices as $value => $label) {
-            $form->setContents("<option value=\"{$value}\">{$label}</option>");
-        }
-        return parent::toString($form);
-    }
-
     /**
      * @return string
      */
@@ -169,5 +134,21 @@ class Choices extends Input
     {
         $this->initValue = $initValue;
         return $this;
+    }
+
+    /**
+     * @return string|string[]
+     */
+    public function getInitValue()
+    {
+        return $this->initValue;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMultiple(): bool
+    {
+        return $this->multiple;
     }
 }
