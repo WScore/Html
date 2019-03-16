@@ -44,10 +44,30 @@ class Html
 
     private function __construct(string $tagName)
     {
+        $this->setTagName($tagName);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTagName(): string
+    {
+        return $this->tagName;
+    }
+
+    /**
+     * @param string $tagName
+     * @return $this
+     */
+    protected function setTagName(string $tagName): self
+    {
         $this->tagName = $tagName;
         if (in_array($tagName, self::$noCloseTags)) {
             $this->setHasCloseTag(false);
+        } else {
+            $this->setHasCloseTag(true);
         }
+        return $this;
     }
 
     /**
@@ -154,17 +174,19 @@ class Html
     }
 
     /**
+     * @param null|Html $html
      * @return string
      */
-    public function toString(): string
+    public function toString($html = null): string
     {
-        $attributes = $this->makeAttributes();
-        if ($this->hasCloseTag) {
-            $contents = implode("\n", $this->contents);
-            if (count($this->contents) > 1) {
+        $html = $html ?: $this;
+        $attributes = $html->makeAttributes();
+        if ($html->hasCloseTag) {
+            $contents = implode("\n", $html->contents);
+            if (count($html->contents) > 1) {
                 $contents = "\n" . $contents . "\n";
             }
-            return "<{$attributes}>{$contents}</{$this->tagName}>";
+            return "<{$attributes}>{$contents}</{$html->tagName}>";
         }
         return "<{$attributes}>";
     }

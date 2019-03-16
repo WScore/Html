@@ -65,4 +65,15 @@ class Form
             ->name($name)
             ->setContents($value);
     }
+
+    /**
+     * @param string $name
+     * @param array $choices
+     * @param string $value
+     * @return Choices
+     */
+    public static function choices(string  $name, array $choices = [], $value = ''): Choices
+    {
+        return Choices::createNew($name, $choices, $value);
+    }
 }

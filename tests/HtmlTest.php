@@ -108,6 +108,9 @@ class HtmlTest extends TestCase
                 Form::input('text', 'name')->placeholder('name here...'),
                 Form::input('radio', 'yes', 'here')
             );
-        $this->assertEquals('', (string) $html);
+        $this->assertEquals('<ul class="form-list">
+<input type="text" name="name" id="name" placeholder="name here...">
+<input type="radio" name="yes" id="yes" value="here">
+</ul>', (string) $html);
     }
 }
