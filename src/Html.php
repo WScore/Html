@@ -37,7 +37,9 @@ class Html
      * @var array
      */
     public static $noCloseTags = [
-        'img', 'input', 'br',
+        'img', 'input', 'br', 'hr',
+        'area','base','col','embed','link',
+        'meta','param','source','track', 'wbr',
     ];
 
     private function __construct(string $tagName)
