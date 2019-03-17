@@ -6,10 +6,10 @@
  * Time: 18:16
  */
 
-use WScore\Html\Choices;
 use PHPUnit\Framework\TestCase;
 use WScore\Html\Form;
-use WScore\Html\Html;
+use WScore\Html\Tags\Choices;
+use WScore\Html\Tags\Tag;
 
 class ChoicesTest extends TestCase
 {
@@ -22,8 +22,8 @@ class ChoicesTest extends TestCase
     {
         $choice = $this->buildChoices();
         $this->assertEquals(Choices::class, get_class($choice));
-        $this->assertEquals('<label><input type="radio" name="test" id="test" value="val1"> label1</label>
-<label><input type="radio" name="test" id="test" value="val2" checked="checked"> label2</label>
+        $this->assertEquals('<label><input type="radio" name="test" id="test_0" value="val1"> label1</label>
+<label><input type="radio" name="test" id="test_1" value="val2" checked="checked"> label2</label>
 ', (string) $choice);
     }
 
@@ -40,9 +40,9 @@ class ChoicesTest extends TestCase
     {
         $choice = $this->buildChoices()->multiple()->expand(false);
         $this->assertEquals(Choices::class, get_class($choice));
-        $this->assertEquals('<select name="test[]" id="test__">
+        $this->assertEquals('<select name="test[]" id="test__" multiple="multiple">
 <option value="val1">label1</option>
-<option value="val2">label2</option>
+<option value="val2" selected>label2</option>
 </select>', (string) $choice);
     }
 
@@ -51,7 +51,7 @@ class ChoicesTest extends TestCase
         $form = $this->buildChoices()->multiple();
         $html = '';
         foreach ($form->getChoices() as $choice) {
-            $html .= $choice->toString() . Html::create('label')->set('for', $choice->get('id')) . "\n";
+            $html .= $choice->toString() . Tag::create('label')->set('for', $choice->get('id')) . "\n";
         }
         $this->assertEquals('<input type="checkbox" name="test[0]" id="test_0_" value="val1"><label for="test_0_"></label>
 <input type="checkbox" name="test[1]" id="test_1_" value="val2" checked="checked"><label for="test_1_"></label>

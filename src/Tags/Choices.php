@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WScore\Html;
+namespace WScore\Html\Tags;
 
 class Choices extends Input
 {
@@ -87,9 +87,8 @@ class Choices extends Input
     }
 
     /**
-     * @param null|Html $html
+     * @param null|Tag $html
      * @return string
-     * @throws \ReflectionException
      */
     public function toString($html = null): string
     {
@@ -110,6 +109,8 @@ class Choices extends Input
             $choice->value($value);
             if ($choice->multiple) {
                 $choice->name($choice->get('name') . "[{$idx}]");
+            } else {
+                $choice->id( $choice->get('name') . "_{$idx}");
             }
 
             $choices[] = $choice;

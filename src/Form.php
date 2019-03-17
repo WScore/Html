@@ -1,16 +1,20 @@
 <?php
 namespace WScore\Html;
 
+use WScore\Html\Tags\Choices;
+use WScore\Html\Tags\Tag;
+use WScore\Html\Tags\Input;
+
 class Form
 {
     /**
      * @param string $action
      * @param string $method
-     * @return Html
+     * @return Tag
      */
-    public static function open(string $action = '', string $method='post'): Html
+    public static function open(string $action = '', string $method='post'): Tag
     {
-        $form = Html::create('form')
+        $form = Tag::create('form')
             ->set('action', $action)
             ->set('method', $method)
             ->setHasCloseTag(false);
@@ -19,11 +23,11 @@ class Form
 
     /**
      * @param string $action
-     * @return Html
+     * @return Tag
      */
-    public static function openForUpload(string $action = ''): Html
+    public static function openForUpload(string $action = ''): Tag
     {
-        $form = Html::create('form')
+        $form = Tag::create('form')
             ->set('action', $action)
             ->set('method', 'post')
             ->set('enctype', 'multipart/form-data')
@@ -32,11 +36,11 @@ class Form
     }
 
     /**
-     * @return Html
+     * @return Tag
      */
-    public static function close(): Html
+    public static function close(): Tag
     {
-        return Html::create("/form")
+        return Tag::create("/form")
             ->setHasCloseTag(false);
     }
 

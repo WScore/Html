@@ -9,108 +9,32 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use WScore\Html\Form;
 use WScore\Html\Html;
 
 class HtmlTest extends TestCase
 {
-    public function testTagConstruction()
+    public function testCreate()
     {
-        $tag = Html::create('test');
-        $html = $tag->toString();
-        $this->assertTrue($tag instanceof Html);
-        $this->assertStringStartsWith('<test>', $html);
-        $this->assertStringEndsWith('</test>', $html);
+        $html = Html::create('tagName')
+            ->class('test-class');
+        $this->assertEquals('<tagName class="test-class"></tagName>', (string) $html);
     }
 
-    public function testSetAttribute()
+    public function testStaticCall()
     {
-        $tag = Html::create('test')
-            ->set('name', 'tested');
-        $html = $tag->toString();
-        $this->assertStringStartsWith('<test ', $html);
-        $this->assertStringEndsWith('</test>', $html);
-        $this->assertStringContainsString('name="tested"', $html);
-    }
-
-    public function testSetAttributeWithConnector()
-    {
-        $tag = Html::create('test')
-            ->set('name', 'tested')
-            ->set('name', 'tested', '--');
-        $html = $tag->toString();
-        $this->assertStringContainsString('name="tested--tested"', $html);
-    }
-
-    public function testSetAttributeWithFalse()
-    {
-        $tag = Html::create('test')
-            ->set('some', 'tested')
-            ->set('name', 'tested')
-            ->set('name', false);
-        $html = (string) $tag;
-        $this->assertStringContainsString('some="tested"', $html);
-        $this->assertStringNotContainsString('name="', $html);
-    }
-
-    public function testHasNoContents()
-    {
-        $tag = Html::create('test')
-            ->setHasCloseTag(false);
-        $html = (string) $tag;
-        $this->assertEquals('<test>', $html);
-    }
-
-    public function testSetContents()
-    {
-        $tag = Html::create('test')
-            ->setContents('test1');
-        $html = (string) $tag;
-        $this->assertEquals('<test>test1</test>', $html);
-
-        $tag = Html::create('test')
-            ->setContents('test1')
-            ->setContents('test2');
-        $html = (string) $tag;
-        $this->assertEquals("<test>\ntest1\ntest2\n</test>", $html);
-    }
-
-    public function testClass()
-    {
-        $html = Html::create('test')
-            ->class('classA')
-            ->class('classB');
-        $this->assertEquals('<test class="classA classB"></test>', (string) $html);
-    }
-
-    public function testStyle()
-    {
-        $html = Html::create('test')
-            ->style('styleA')
-            ->style('styleB');
-        $this->assertEquals('<test style="styleA; styleB"></test>', (string) $html);
-    }
-
-    public function testMagicMethod()
-    {
-        $link = Html::create('a')
-            ->href('test.php')
-            ->target('_blank')
-            ->setContents('test');
-        $this->assertEquals('<a href="test.php" target="_blank">test</a>', (string) $link);
-    }
-
-    public function testComplexExample()
-    {
-        $html = Html::create('ul')
-            ->class('form-list')
-            ->setContents(
-                Form::input('text', 'name')->placeholder('name here...'),
-                Form::input('radio', 'yes', 'here')
-            );
-        $this->assertEquals('<ul class="form-list">
-<input type="text" name="name" id="name" placeholder="name here...">
-<input type="radio" name="yes" id="yes" value="here">
+        $html = Html::ul(
+            Html::li('test1'),
+            Html::li('test1')
+        )->style('a:b');
+        $this->assertEquals('<ul style="a:b">
+<li>test1</li>
+<li>test1</li>
 </ul>', (string) $html);
+    }
+
+    public function testSampleCode()
+    {
+        $html = Html::a('sample link')->href('test.php')->target('_blank');
+        $this->assertEquals('<a href="test.php" target="_blank">sample link</a>', (string) $html);
     }
 }
