@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WScore\Html;
+namespace WScore\Html\Tags;
 
 class Choices extends Input
 {
@@ -87,9 +87,8 @@ class Choices extends Input
     }
 
     /**
-     * @param null|Html $html
+     * @param null|Tag $html
      * @return string
-     * @throws \ReflectionException
      */
     public function toString($html = null): string
     {

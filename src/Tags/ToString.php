@@ -1,13 +1,13 @@
 <?php
-namespace WScore\Html;
+namespace WScore\Html\Tags;
 
 class ToString
 {
     /**
-     * @param Html $html
+     * @param Tag $html
      * @return string
      */
-    public static function from(Html $html)
+    public static function from(Tag $html)
     {
         if ($html instanceof Choices ) {
             return self::choiceToString($html);
@@ -29,7 +29,7 @@ class ToString
         }
         $string = '';
         foreach ($html->getChoices() as $choice) {
-            $string .= Html::create('label')
+            $string .= Tag::create('label')
                     ->setContents(
                         self::choiceToInputString($choice) . ' ' . $choice->getLabel()) . "\n";
         }
@@ -70,10 +70,10 @@ class ToString
     }
 
     /**
-     * @param Html $html
+     * @param Tag $html
      * @return string
      */
-    private static function htmlToString(Html $html)
+    private static function htmlToString(Tag $html)
     {
         $attributes = $html->makeAttributes();
         if ($html->hasCloseTag()) {

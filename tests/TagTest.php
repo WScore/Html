@@ -10,22 +10,22 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 use WScore\Html\Form;
-use WScore\Html\Html;
+use WScore\Html\Tags\Tag;
 
-class HtmlTest extends TestCase
+class TagTest extends TestCase
 {
     public function testTagConstruction()
     {
-        $tag = Html::create('test');
+        $tag = Tag::create('test');
         $html = $tag->toString();
-        $this->assertTrue($tag instanceof Html);
+        $this->assertTrue($tag instanceof Tag);
         $this->assertStringStartsWith('<test>', $html);
         $this->assertStringEndsWith('</test>', $html);
     }
 
     public function testSetAttribute()
     {
-        $tag = Html::create('test')
+        $tag = Tag::create('test')
             ->set('name', 'tested');
         $html = $tag->toString();
         $this->assertStringStartsWith('<test ', $html);
@@ -35,7 +35,7 @@ class HtmlTest extends TestCase
 
     public function testSetAttributeWithConnector()
     {
-        $tag = Html::create('test')
+        $tag = Tag::create('test')
             ->set('name', 'tested')
             ->set('name', 'tested', '--');
         $html = $tag->toString();
@@ -44,7 +44,7 @@ class HtmlTest extends TestCase
 
     public function testSetAttributeWithFalse()
     {
-        $tag = Html::create('test')
+        $tag = Tag::create('test')
             ->set('some', 'tested')
             ->set('name', 'tested')
             ->set('name', false);
@@ -55,7 +55,7 @@ class HtmlTest extends TestCase
 
     public function testHasNoContents()
     {
-        $tag = Html::create('test')
+        $tag = Tag::create('test')
             ->setHasCloseTag(false);
         $html = (string) $tag;
         $this->assertEquals('<test>', $html);
@@ -63,12 +63,12 @@ class HtmlTest extends TestCase
 
     public function testSetContents()
     {
-        $tag = Html::create('test')
+        $tag = Tag::create('test')
             ->setContents('test1');
         $html = (string) $tag;
         $this->assertEquals('<test>test1</test>', $html);
 
-        $tag = Html::create('test')
+        $tag = Tag::create('test')
             ->setContents('test1')
             ->setContents('test2');
         $html = (string) $tag;
@@ -77,7 +77,7 @@ class HtmlTest extends TestCase
 
     public function testClass()
     {
-        $html = Html::create('test')
+        $html = Tag::create('test')
             ->class('classA')
             ->class('classB');
         $this->assertEquals('<test class="classA classB"></test>', (string) $html);
@@ -85,7 +85,7 @@ class HtmlTest extends TestCase
 
     public function testStyle()
     {
-        $html = Html::create('test')
+        $html = Tag::create('test')
             ->style('styleA')
             ->style('styleB');
         $this->assertEquals('<test style="styleA; styleB"></test>', (string) $html);
@@ -93,7 +93,7 @@ class HtmlTest extends TestCase
 
     public function testMagicMethod()
     {
-        $link = Html::create('a')
+        $link = Tag::create('a')
             ->href('test.php')
             ->target('_blank')
             ->setContents('test');
@@ -102,7 +102,7 @@ class HtmlTest extends TestCase
 
     public function testComplexExample()
     {
-        $html = Html::create('ul')
+        $html = Tag::create('ul')
             ->class('form-list')
             ->setContents(
                 Form::input('text', 'name')->placeholder('name here...'),
