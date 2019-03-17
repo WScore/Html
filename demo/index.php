@@ -25,7 +25,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
     <hr>
     <?= Form::open('nowhere.php'); ?>
     <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
+        <label for="email">Email address</label>
         <?= Form::input('email', 'email')->class('form-control')->placeholder('Enter email') ?>
     </div>
 
@@ -33,7 +33,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
     Html::create('div')
         ->class('form-group')
         ->setContents(
-            Html::label('Example Select')->for('select-sample'),
+            Html::label('Select Example')->for('select-sample'),
             Form::choices('select-sample', [
                 'select' => 'Drop Down List',
                 'radio' => 'Radio Button',
@@ -44,8 +44,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
     <?=
     Html::div(
-        Html::label('Example Select')->for('select-sample'),
-        Form::choices('select-sample', [
+        Html::label('Multiple Select Example')->for('select-multiple__'),
+        Form::choices('select-multiple', [
             'select' => 'Drop Down List',
             'radio' => 'Radio Button',
             'checkbox' => 'Check Box',
@@ -71,7 +71,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
         'val2' => 'value 2',
         'val3' => 'value 3',
         'val4' => 'value 4',
-    ], ['val1', 'val3'])->class('form-check-input');
+    ], ['val1', 'val3']);
     ?>
     <label>Form::choice Radio Button Example</label>
     <?php showChoiceList($form); ?>

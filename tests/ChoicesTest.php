@@ -22,8 +22,8 @@ class ChoicesTest extends TestCase
     {
         $choice = $this->buildChoices();
         $this->assertEquals(Choices::class, get_class($choice));
-        $this->assertEquals('<label><input type="radio" name="test" id="test" value="val1"> label1</label>
-<label><input type="radio" name="test" id="test" value="val2" checked="checked"> label2</label>
+        $this->assertEquals('<label><input type="radio" name="test" id="test_0" value="val1"> label1</label>
+<label><input type="radio" name="test" id="test_1" value="val2" checked="checked"> label2</label>
 ', (string) $choice);
     }
 
@@ -40,9 +40,9 @@ class ChoicesTest extends TestCase
     {
         $choice = $this->buildChoices()->multiple()->expand(false);
         $this->assertEquals(Choices::class, get_class($choice));
-        $this->assertEquals('<select name="test[]" id="test__">
+        $this->assertEquals('<select name="test[]" id="test__" multiple="multiple">
 <option value="val1">label1</option>
-<option value="val2">label2</option>
+<option value="val2" selected>label2</option>
 </select>', (string) $choice);
     }
 
