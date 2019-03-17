@@ -116,3 +116,18 @@ echo Form::choices('test', [
     'val2)
     ->expand(false);
 ```
+
+Demo
+----
+
+To see `WScore.Html` working in the demo, 
+
+```
+$ git clone https://github.com/asaokamei/WScore.Html
+$ cd WScore.Html
+$ composer install
+$ cd demo
+$ php -S 127.0.0.1:8000
+```
+
+and browse the last URL. 
