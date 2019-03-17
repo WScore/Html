@@ -60,11 +60,14 @@ class ToString
     {
         if ($form->isMultiple()) {
             $form->name($form->get('name') . '[]');
+            $form->set('multiple', true);
         }
+        $initValues = (array) $form->getInitValue();
         foreach ($form->getChoices() as $option) {
             $value = $option->get('value');
             $label = $option->getLabel();
-            $form->setContents("<option value=\"{$value}\">{$label}</option>");
+            $selected = in_array($value, $initValues) ? ' selected' : '';
+            $form->setContents("<option value=\"{$value}\"{$selected}>{$label}</option>");
         }
         return self::htmlToString($form);
     }
