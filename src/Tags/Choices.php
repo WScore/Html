@@ -109,6 +109,8 @@ class Choices extends Input
             $choice->value($value);
             if ($choice->multiple) {
                 $choice->name($choice->get('name') . "[{$idx}]");
+            } else {
+                $choice->id( $choice->get('name') . "_{$idx}");
             }
 
             $choices[] = $choice;
