@@ -13,7 +13,7 @@ $ composer require wscore/html
 Sample Codes
 ------------
 
-###Basic HTML
+### Basic HTML
 
 use `WScore\Html\Html` class to create an HTML object, as;
 
@@ -22,28 +22,28 @@ use WScore\Html\Html;
 
 $html = Html::create('tagName')
             ->set('attribute', 'value')
-            ->setContents('readme');
+            ->setContents('content');
 echo (string) $html;
 ```
 
 should output HTML like, 
 
 ```html
-<tagName attribute="value">readme</tagName>
+<tagName attribute="value">content</tagName>
 ```
 
 You can `set`, `add`, `remove`, `reset`, attributes. 
 
-Also magic method 
+There are some magic methods as well. 
 
 ```php
-$html = Html::create('a')
-            ->href('attribute', 'value') // magic method to set href attribute
+$html = Html::a('sample link')       // magic method to create a new tag and contents
+            ->href('check.php')    // magic method to set href attribute
             ->target('_blank');
 ```
 
 
-### Form HTML
+### HTML Form
 
 use `WScore\Html\Form` class to create a HTML form object, as;
 
@@ -64,7 +64,7 @@ should create something like:
 
 ### Some Complex Case
 
-
+To create a nested html code, 
 
 ```php
 echo Html::create('ul')
@@ -78,9 +78,9 @@ echo Html::create('ul')
 should result in following html code. 
 
 ```html
-<ul class="form-list">\n
-<input type="text" name="name" id="name" placeholder="name here...">\n
-<input type="radio" name="yes" id="yes" value="here">\n
+<ul class="form-list">
+<input type="text" name="name" id="name" placeholder="name here...">
+<input type="radio" name="yes" id="yes" value="here">
 </ul>
 ```
 

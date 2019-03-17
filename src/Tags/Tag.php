@@ -163,6 +163,9 @@ class Tag
         return isset($this->attributes[$key]);
     }
 
+    /**
+     * @return string
+     */
     public function makeAttributes(): string
     {
         $list = [$this->tagName];
