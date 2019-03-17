@@ -7,7 +7,7 @@ class ToString
      * @param Tag $html
      * @return string
      */
-    public static function from(Tag $html)
+    public static function from(Tag $html): string
     {
         if ($html instanceof Choices ) {
             return self::choiceToString($html);
@@ -73,9 +73,9 @@ class ToString
      * @param Tag $html
      * @return string
      */
-    private static function htmlToString(Tag $html)
+    private static function htmlToString(Tag $html): string
     {
-        $attributes = $html->makeAttributes();
+        $attributes = self::makeAttributes($html);
         if ($html->hasCloseTag()) {
             $contents = implode("\n", $html->getContents());
             if (count($html->getContents()) > 1) {
@@ -84,5 +84,17 @@ class ToString
             return "<{$attributes}>{$contents}</{$html->getTagName()}>";
         }
         return "<{$attributes}>";
+    }
+
+    private static function makeAttributes(Tag $tag): string
+    {
+        $attributes = $tag->getAttributes();
+        $list = [$tag->getTagName()];
+        foreach ($attributes as $key => $attribute) {
+            $attr = htmlspecialchars($attribute, ENT_QUOTES);
+            if (!$attr) continue;
+            $list[] = "{$key}=\"{$attr}\"";
+        }
+        return implode(' ', $list);
     }
 }

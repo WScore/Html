@@ -164,17 +164,11 @@ class Tag
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function makeAttributes(): string
+    public function getAttributes(): array
     {
-        $list = [$this->tagName];
-        foreach ($this->attributes as $key => $attribute) {
-            $attr = htmlspecialchars($attribute, ENT_QUOTES);
-            if (!$attr) continue;
-            $list[] = "{$key}=\"{$attr}\"";
-        }
-        return implode(' ', $list);
+        return $this->attributes;
     }
 
     /**
