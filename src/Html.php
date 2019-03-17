@@ -11,6 +11,7 @@ use WScore\Html\Tags\Tag;
  * @method static Tag ul(...$contents)
  * @method static Tag li(...$contents)
  * @method static Tag a(...$contents)
+ * @method static Tag label(...$contents)
  */
 class Html
 {

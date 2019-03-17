@@ -11,6 +11,7 @@ namespace WScore\Html\Tags;
  * @method $this href(string $target)
  * @method $this target(string $target)
  * @method $this placeholder(string $placeholder)
+ * @method $this for(string $for)
  */
 class Tag
 {
