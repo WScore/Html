@@ -110,6 +110,22 @@ class Tag
     }
 
     /**
+     * @param array $attributes
+     * @return $this
+     */
+    public function setAttributes(array $attributes)
+    {
+        foreach ($attributes as $key => $attribute) {
+            if (method_exists($this, $key)) {
+                call_user_func_array([$this, $key], (array) $attribute);
+            } else {
+                $this->set($key, $attribute);
+            }
+        }
+        return $this;
+    }
+
+    /**
      * @param string $key
      * @param string $value
      * @param string $conn
