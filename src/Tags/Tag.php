@@ -8,6 +8,12 @@ namespace WScore\Html\Tags;
  * Class Html
  * @package WScore\Html
  *
+ * @method static $this a(...$contents)
+ * @method static $this div(...$contents)
+ * @method static $this label(...$contents)
+ * @method static $this p(...$contents)
+ * @method static $this span(...$contents)
+ *
  * @method $this href(string $target)
  * @method $this target(string $target)
  * @method $this placeholder(string $placeholder)
@@ -80,6 +86,21 @@ class Tag
     {
         $self = new static($tagName);
         return $self;
+    }
+
+    /**
+     * @param string $name
+     * @param array $arguments
+     * @return Tag
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        $tag = self::create($name);
+        if (!empty($arguments)) {
+            $tag->setContents(...$arguments);
+        }
+
+        return $tag;
     }
 
     /**
